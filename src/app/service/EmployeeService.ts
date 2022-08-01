@@ -8,6 +8,7 @@ export class EmployeeService{
     constructor(private employeeRepo: EmployeeRespository){
 
     }
+    //getall
     async getAllEmployees(){
         
         return await this.employeeRepo.getAllEmployees();
