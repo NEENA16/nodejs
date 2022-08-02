@@ -8,6 +8,11 @@ export class DepartmentRespository{
          const departmentRepo = getConnection().getRepository(Department);
         return departmentRepo.find();
     }
+    //get element by id
+    async getDepartmentById(id: string): Promise<Department> {
+        const departmentRepo = getConnection().getRepository(Department);
+        return departmentRepo.findOne(id);
+      }
     //create employee
     public async saveDepartmentDetails(departmentDetails: Department) {
         const departmentRepo = getConnection().getRepository(Department);

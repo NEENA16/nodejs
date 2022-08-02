@@ -19,12 +19,16 @@ class EmployeeController extends AbstractController {
     this.router.get(`${this.path}`, 
     authorize(['admin']),    //to authorize  , a middleware
     this.employeeResponse);
-    this.router.get(`${this.path}/:id`, this.getEmployeeById);
+    this.router.get(`${this.path}/:id`, 
+    validationMiddleware(UpdateEmployeeParamsDto, APP_CONSTANTS.params),
+    this.getEmployeeById);
     this.router.put(`${this.path}/:id`, 
     validationMiddleware(UpdateEmployeeDto, APP_CONSTANTS.body),
     validationMiddleware(UpdateEmployeeParamsDto, APP_CONSTANTS.params),
     this.updateEmployeeById);
-    this.router.delete(`${this.path}/:id`, this.softDeleteEmployeeById);
+    this.router.delete(`${this.path}/:id`, 
+    validationMiddleware(UpdateEmployeeParamsDto, APP_CONSTANTS.params),
+    this.softDeleteEmployeeById);
     this.router.post(
       `${this.path}`,
       validationMiddleware(CreateEmployeeDto, APP_CONSTANTS.body),

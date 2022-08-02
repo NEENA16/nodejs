@@ -15,6 +15,11 @@ export class DepartmentService{
         return await this.departmentRepo.getAllDepartments();
     }
 
+    // //get element by id
+    async getDepartmentById(id: string) {
+        return await this.departmentRepo.getDepartmentById(id);
+      }
+
     //create department
     public async createDepartment(departmentDetails: any) {
         try {
