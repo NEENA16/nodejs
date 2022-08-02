@@ -6,7 +6,7 @@ import { EmployeeService } from "../service/EmployeeService";
 import validationMiddleware from "../middleware/validationMiddleware";
 import {CreateEmployeeDto} from "../dto/CreateEmployeeDto";
 import { UpdateEmployeeDto } from "../dto/UpdateEmployeeDto";
-import { UpdateEmployeeParamsDto } from "../dto/UpdateEmployeeParamsDto";
+import { EmployeeParamsDto } from "../dto/EmployeeParamsDto";
 import authorize from "../middleware/authorize";
 
 class EmployeeController extends AbstractController {
@@ -20,14 +20,14 @@ class EmployeeController extends AbstractController {
     // authorize(['admin']),    //to authorize  , a middleware
     this.employeeResponse);
     this.router.get(`${this.path}/:id`, 
-    validationMiddleware(UpdateEmployeeParamsDto, APP_CONSTANTS.params),
+    validationMiddleware(EmployeeParamsDto, APP_CONSTANTS.params),
     this.getEmployeeById);
     this.router.put(`${this.path}/:id`, 
     validationMiddleware(UpdateEmployeeDto, APP_CONSTANTS.body),
-    validationMiddleware(UpdateEmployeeParamsDto, APP_CONSTANTS.params),
+    validationMiddleware(EmployeeParamsDto, APP_CONSTANTS.params),
     this.updateEmployeeById);
     this.router.delete(`${this.path}/:id`, 
-    validationMiddleware(UpdateEmployeeParamsDto, APP_CONSTANTS.params),
+    validationMiddleware(EmployeeParamsDto, APP_CONSTANTS.params),
     this.softDeleteEmployeeById);
     this.router.post(
       `${this.path}`,

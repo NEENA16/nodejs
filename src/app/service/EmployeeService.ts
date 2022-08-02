@@ -26,8 +26,7 @@ export class EmployeeService{
         try {
             const newEmployee = plainToClass(Employee, {
                 name: employeeDetails.name,
-                // username: employeeDetails.username,
-                // age: employeeDetails.age,
+                
                 
                 dateofjoining: employeeDetails.dateofjoining,
                 departmentId: employeeDetails.departmentId,
@@ -35,11 +34,16 @@ export class EmployeeService{
                 status: employeeDetails.status,
                 experience: employeeDetails.experience,
                 username: employeeDetails.username,
+                // const data = await this.addressService.createEmployee(request.body);
+                // createAddress(request.body.address)
+                // request.body.address
+
                 // password: employeeDetails.password
 
                 // to encrypt password when while creating the employee
                 password: employeeDetails.password ? await bcrypt.hash(employeeDetails.password, 10) : ' '
                 // isActive: true,
+
             });
             const save = await this.employeeRepo.saveEmployeeDetails(newEmployee);
             return save;
