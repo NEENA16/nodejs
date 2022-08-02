@@ -27,13 +27,16 @@ export class EmployeeService{
                 departmentId: employeeDetails.departmentId,
                 role: employeeDetails.role,
                 status: employeeDetails.status,
-                experience: employeeDetails.experience
+                experience: employeeDetails.experience,
+                username: employeeDetails.username,
+                password: employeeDetails.password
                 // isActive: true,
             });
             const save = await this.employeeRepo.saveEmployeeDetails(newEmployee);
             return save;
         } catch (err) {
-            throw new HttpException(400, "Failed to create employee", "FAILED");
+            // throw new HttpException(400, "Failed to create employee", "FAILED");  //overwritten error
+            throw(err);
         }
     }
 
@@ -52,6 +55,8 @@ export class EmployeeService{
             role: employeeDetails.role ? employeeDetails.role : undefined,
             status: employeeDetails.status ? employeeDetails.status : undefined,
             experience: employeeDetails.experience ? employeeDetails.experience : undefined,
+            username: employeeDetails.username ? employeeDetails.username : undefined,
+            password: employeeDetails.password ? employeeDetails.password : undefined
         });
         return updateEmployeeDetails;
     }

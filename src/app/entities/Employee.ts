@@ -16,6 +16,10 @@ import { Department } from "./Department";
         public experience: number;
         @Column({ nullable: false })
         public dateofjoining: string;
+        @Column({ nullable: false })
+        public username: string;
+        @Column({ nullable: false })
+        public password: string;
 
 
         @ManyToOne(() => Department, { cascade: true })
