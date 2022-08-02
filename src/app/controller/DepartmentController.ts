@@ -21,7 +21,7 @@ class DepartmentController extends AbstractController {
       this.createDepartment
     );
   }
-  //get all employess
+  //get all department
   private departmentResponse = async (request: RequestWithUser, response: Response, next: NextFunction) => {
     try {
       const data: any = await this.departmentService.getAllDepartments();
@@ -48,7 +48,7 @@ class DepartmentController extends AbstractController {
     }
   }
 
-  //update
+  //update department
   private updateDepartmentById = async (
     request: RequestWithUser,
     response: Response,
@@ -68,7 +68,7 @@ class DepartmentController extends AbstractController {
     }
   };
 
-   //delete
+   //delete department
    private softDeleteDepartmentById = async (
     request: RequestWithUser,
     response: Response,

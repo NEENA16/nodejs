@@ -22,7 +22,12 @@ export class EmployeeService{
                 name: employeeDetails.name,
                 // username: employeeDetails.username,
                 // age: employeeDetails.age,
+                
+                dateofjoining: employeeDetails.dateofjoining,
                 departmentId: employeeDetails.departmentId,
+                role: employeeDetails.role,
+                status: employeeDetails.status,
+                experience: employeeDetails.experience
                 // isActive: true,
             });
             const save = await this.employeeRepo.saveEmployeeDetails(newEmployee);
@@ -43,6 +48,10 @@ export class EmployeeService{
         const employeeRepo = getConnection().getRepository(Employee);
         const updateEmployeeDetails = await employeeRepo.update({ id: employeeId, deletedAt: null }, {
             name: employeeDetails.name ? employeeDetails.name : undefined,
+            dateofjoining: employeeDetails.dateofjoining ? employeeDetails.dateofjoining : undefined,
+            role: employeeDetails.role ? employeeDetails.role : undefined,
+            status: employeeDetails.status ? employeeDetails.status : undefined,
+            experience: employeeDetails.experience ? employeeDetails.experience : undefined,
         });
         return updateEmployeeDetails;
     }
