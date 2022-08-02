@@ -49,16 +49,20 @@ export class EmployeeService{
 
       public async updateEmployeeDetails(employeeId: string, employeeDetails: any) {
         const employeeRepo = getConnection().getRepository(Employee);
-        const updateEmployeeDetails = await employeeRepo.update({ id: employeeId, deletedAt: null }, {
-            name: employeeDetails.name ? employeeDetails.name : undefined,
-            dateofjoining: employeeDetails.dateofjoining ? employeeDetails.dateofjoining : undefined,
-            role: employeeDetails.role ? employeeDetails.role : undefined,
-            status: employeeDetails.status ? employeeDetails.status : undefined,
-            experience: employeeDetails.experience ? employeeDetails.experience : undefined,
-            username: employeeDetails.username ? employeeDetails.username : undefined,
-            password: employeeDetails.password ? employeeDetails.password : undefined
-        });
+        const updateEmployeeDetails = await employeeRepo.update({ id: employeeId, deletedAt: null },employeeDetails 
+        //     {
+        //     name: employeeDetails.name ? employeeDetails.name : undefined,
+        //     dateofjoining: employeeDetails.dateofjoining ? employeeDetails.dateofjoining : undefined,
+        //     role: employeeDetails.role ? employeeDetails.role : undefined,
+        //     status: employeeDetails.status ? employeeDetails.status : undefined,
+        //     experience: employeeDetails.experience ? employeeDetails.experience : undefined,
+        //     username: employeeDetails.username ? employeeDetails.username : undefined,
+        //     password: employeeDetails.password ? employeeDetails.password : undefined
+        // }
+        );
         return updateEmployeeDetails;
+        
+
     }
    
       //delete

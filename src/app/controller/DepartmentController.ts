@@ -5,6 +5,9 @@ import APP_CONSTANTS from "../constants";
 import { DepartmentService } from "../service/DepartmentService";
 import validationMiddleware from "../middleware/validationMiddleware";
 import { CreateDepartmentDto } from "../dto/CreateDepartmentDto";
+import { UpdateDepartmentParamsDto } from "../dto/UpdateDepartmentParamsDto";
+import { UpdateDepartmentDto } from "../dto/UpdateDepartmentDto";
+
 
 class DepartmentController extends AbstractController {
   constructor(private departmentService: DepartmentService) {
@@ -14,7 +17,10 @@ class DepartmentController extends AbstractController {
 
   protected initializeRoutes() {
     this.router.get(`${this.path}`, this.departmentResponse);
-    this.router.put(`${this.path}/:id`, this.updateDepartmentById);
+    this.router.put(`${this.path}/:id`, 
+    validationMiddleware(UpdateDepartmentParamsDto, APP_CONSTANTS.params),
+    validationMiddleware(UpdateDepartmentDto, APP_CONSTANTS.body),
+      this.updateDepartmentById);
     this.router.delete(`${this.path}/:id`, this.softDeleteDepartmentById);
     this.router.post(
       `${this.path}`,
