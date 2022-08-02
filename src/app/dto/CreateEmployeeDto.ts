@@ -24,5 +24,5 @@ export class CreateEmployeeDto {
     public password: string;
 
     @IsString()
-    public departmentID: string;
+    public departmentId: string;
 }

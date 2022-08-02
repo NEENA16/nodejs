@@ -32,6 +32,6 @@ export class UpdateEmployeeDto {
 
     @IsOptional()
     @IsString()
-    public departmentID: string;
+    public departmentId: string;
 
 }

@@ -11,6 +11,8 @@ const fmt: Formatter = new Formatter();
  * @param response
  * @param next
  */
+
+// error middleware is expecting an error of type httpexception, it has by default all the fields
 const errorMiddleware = (error: HttpException, request: Request, response: Response, next: NextFunction) => {
   const status = error.status || 500;
   const message = error.message || "Something went wrong";

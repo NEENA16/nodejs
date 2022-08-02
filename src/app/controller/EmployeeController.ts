@@ -7,6 +7,7 @@ import validationMiddleware from "../middleware/validationMiddleware";
 import {CreateEmployeeDto} from "../dto/CreateEmployeeDto";
 import { UpdateEmployeeDto } from "../dto/UpdateEmployeeDto";
 import { UpdateEmployeeParamsDto } from "../dto/UpdateEmployeeParamsDto";
+import authorize from "../middleware/authorize";
 
 class EmployeeController extends AbstractController {
   constructor(private employeeService: EmployeeService) {
@@ -15,7 +16,9 @@ class EmployeeController extends AbstractController {
   }
 
   protected initializeRoutes() {
-    this.router.get(`${this.path}`, this.employeeResponse);
+    this.router.get(`${this.path}`, 
+    authorize(['admin']),    //to authorize  , a middleware
+    this.employeeResponse);
     this.router.get(`${this.path}/:id`, this.getEmployeeById);
     this.router.put(`${this.path}/:id`, 
     validationMiddleware(UpdateEmployeeDto, APP_CONSTANTS.body),
@@ -27,6 +30,11 @@ class EmployeeController extends AbstractController {
       validationMiddleware(CreateEmployeeDto, APP_CONSTANTS.body),
       // this.asyncRouteHandler(this.createEmployee),
       this.createEmployee
+    );
+    // for login page
+    this.router.post(
+      `${this.path}/login`,
+      this.login
     );
   }
   //get all employess
@@ -111,6 +119,30 @@ class EmployeeController extends AbstractController {
       return next(error);
     }
   };
+ 
+  //for login page
+  private login = async (
+    request: RequestWithUser,
+    response: Response,
+    next: NextFunction
+  ) => {
+    try{
+      const loginData = request.body;
+      const loginDetail = await this.employeeService.employeeLogin(
+        loginData.name.toLowerCase(),
+        loginData.password
+      );
+      response.send(
+        this.fmt.formatResponse(loginDetail, Date.now() - request.startTime, "OK")
+      );
+    } catch(err){
+      next(err);
+    }
+    
+  };
+
 }
+
+
 
 export default EmployeeController;

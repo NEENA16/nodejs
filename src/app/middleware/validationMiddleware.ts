@@ -42,7 +42,9 @@ function validationMiddleware<T>(type: any, parameter: string, skipMissingProper
         .then((errors: ValidationError[]) => {
           if (errors.length > 0) {
             const errorDetail = ErrorCodes.VALIDATION_ERROR;
-            next(errors);
+            
+            next(new HttpException(400, errorDetail.MESSAGE, errorDetail.CODE, errors));
+            //next(errors);  // call error m/w
           } else {
             if(parameter === 'body'){
                req.body = requestBody;
