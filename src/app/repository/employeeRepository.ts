@@ -5,7 +5,7 @@ export class EmployeeRespository{
     //get all employees
     async getAllEmployees(){
          const employeeRepo = getConnection().getRepository(Employee);
-        return employeeRepo.find();
+        return employeeRepo.find({ relations: ['department','address']});
     }
     //create employee
     public async saveEmployeeDetails(employeeDetails: Employee) {
@@ -13,22 +13,24 @@ export class EmployeeRespository{
         return employeeRepo.save(employeeDetails);
     }
     //get element by id
-    async getEmployeeById(id: string): Promise<Employee> {
+    async getEmployeeById(id: string, relations: string[]=['department','address']): Promise<Employee> {
         const employeeRepo = getConnection().getRepository(Employee);
-        return employeeRepo.findOne(id);
+        return employeeRepo.findOne(id,{relations: relations});
       }
      //update
     
-    public async updateEmployeebyId(id:string,employeeDetails: Employee) {
+    public async updateEmployeebyId(employeeDetails: Employee) {
         const employeeRepo = getConnection().getRepository(Employee);
-        return employeeRepo.update(id,employeeDetails);
+        console.log(employeeDetails)
+        return employeeRepo.save(employeeDetails);
     }
       //delete
       public async softDeleteEmployeeById(id: string) {
         const employeeRepo = getConnection().getRepository(Employee);
-        return employeeRepo.softDelete({
-            id
-        });
+        const employee= await this.getEmployeeById(id,['address']);
+        return employeeRepo.softRemove(
+            employee
+        );
     }
 
     // for login page

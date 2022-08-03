@@ -28,7 +28,7 @@ export class CreateEmployeeDto {
     @IsString()
     public departmentId: string;
 
-    // @ValidateNested({ each: true })
-    // @Type(() => CreateAddressDto)
-  
+    @ValidateNested({ each: true })
+    @Type(() => CreateAddressDto)
+    public address: CreateAddressDto;
 }

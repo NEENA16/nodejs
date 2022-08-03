@@ -1,4 +1,6 @@
-import { IsNumber, IsOptional, IsString, IsUUID } from "class-validator";
+import { Type } from "class-transformer";
+import { IsNumber, IsOptional, IsString, IsUUID, ValidateNested } from "class-validator";
+import { UpdateAddressDto } from "./UpdateAddressDto";
 
 export class UpdateEmployeeDto {
 
@@ -33,5 +35,10 @@ export class UpdateEmployeeDto {
     @IsOptional()
     @IsString()
     public departmentId: string;
+
+    @IsOptional()
+    @ValidateNested({ each: true })
+    @Type(() => UpdateAddressDto)
+    public address: UpdateAddressDto;
 
 }

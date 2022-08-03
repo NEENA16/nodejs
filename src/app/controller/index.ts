@@ -13,8 +13,8 @@ import AddressService from "../service/AddressSrevice";
 import AddressRespository from "../repository/addressRepository";
 export default [
   new HealthController(),
-  // new EmployeeController(new EmployeeService(new EmployeeRespository(),new AddressService(new AddressRespository()))),
-  new EmployeeController(new EmployeeService(new EmployeeRespository())),
+  new EmployeeController(new EmployeeService(new EmployeeRespository(),new AddressService(new AddressRespository()))),
+  // new EmployeeController(new EmployeeService(new EmployeeRespository())),
   new DepartmentController(new DepartmentService(new DepartmentRespository())),
   new AddressController(new AddressService(new AddressRespository())),
 ];

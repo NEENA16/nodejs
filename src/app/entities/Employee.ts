@@ -32,6 +32,5 @@ import { Department } from "./Department";
         @OneToOne( ()=> Address,{cascade:true})
             @JoinColumn()
             public address: Address;
-            @Column({nullable: true})
-            public addressid:string
+            
 }

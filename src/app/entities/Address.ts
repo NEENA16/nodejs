@@ -4,7 +4,7 @@ import { AbstractEntity } from "./AbstractEntity";
 @Entity("address")
     export class Address extends AbstractEntity {
         @PrimaryGeneratedColumn("uuid")
-        public addressid: string;
+        public id: string;
         @Column({ nullable: false })
         public line1: string;
         @Column({ nullable: false })

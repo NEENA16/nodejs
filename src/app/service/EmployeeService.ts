@@ -11,11 +11,12 @@ import UserNotAuthorizedException from "../exception/UserNotAuthorizedException"
 import jsonwebtoken from "jsonwebtoken"
 import AddressRespository from "../repository/addressRepository";
 import AddressService from "./AddressSrevice";
+import { Address } from "../entities/Address";
 
 export class EmployeeService{
 
     // constructor(private employeeRepo: EmployeeRespository, private addressService: AddressService)
-    constructor(private employeeRepo: EmployeeRespository)
+    constructor(private employeeRepo: EmployeeRespository, private addressService: AddressService)
     {
 
     }
@@ -27,7 +28,16 @@ export class EmployeeService{
 
     //create employee
     public async createEmployee(employeeDetails: any) {
+      
         try {
+            const newAddress = plainToClass(Address, {
+              line1: employeeDetails.address.line1,
+              line2: employeeDetails.address.line2,
+              city: employeeDetails.address.city,
+              state: employeeDetails.address.state,
+              pin: employeeDetails.address.pin
+            }) 
+
             const newEmployee = plainToClass(Employee, {
                 name: employeeDetails.name,
                 dateofjoining: employeeDetails.dateofjoining,
@@ -38,8 +48,6 @@ export class EmployeeService{
                 username: employeeDetails.username,
                 address:employeeDetails.address,
                 
-                // createAddress(request.body.address)
-                // request.body.address
 
                 // password: employeeDetails.password
 
@@ -48,9 +56,8 @@ export class EmployeeService{
                 // isActive: true,
 
             });
-            // console.log(employeeDetails.address)
-            // await this.addressService.createAddress(employeeDetails.address);
             const save = await this.employeeRepo.saveEmployeeDetails(newEmployee);
+            // await this.addressService.createAddress(newAddress);
             return save;
         } catch (err) { // @ValidateNested({ each: true })
           // @Type(() => CreateAddressDto)
@@ -78,8 +85,12 @@ export class EmployeeService{
       //update
 
       public async updateEmployeeDetails(employeeId: string, employeeDetails: any) {
-        const employeeRepo = getConnection().getRepository(Employee);
-        const updateEmployeeDetails = await employeeRepo.update({ id: employeeId, deletedAt: null },employeeDetails 
+
+        employeeDetails.id = employeeId;
+        // const employeeRepo = getConnection().getRepository(Employee);
+        // const updateAddressDetails = await addressRepo.update({ id: employeeDetails.addressid, deletedAt: null },employeeDetails.address)
+        // const updateEmployeeDetails = await employeeRepo.save{ id: employeeId, deletedAt: null },employeeDetails 
+          const updateEmployeeDetails = await this.employeeRepo.updateEmployeebyId(employeeDetails)
         //     {
         //     name: employeeDetails.name ? employeeDetails.name : undefined,
         //     dateofjoining: employeeDetails.dateofjoining ? employeeDetails.dateofjoining : undefined,
@@ -89,7 +100,7 @@ export class EmployeeService{
         //     username: employeeDetails.username ? employeeDetails.username : undefined,
         //     password: employeeDetails.password ? employeeDetails.password : undefined
         // }
-        );
+        // );
         return updateEmployeeDetails;
         }
      
