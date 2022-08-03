@@ -16,6 +16,7 @@ export class AddressService{
 
     //create employee
     public async createAddress(addressDetails: any) {
+            console.log(addressDetails);
         try {
             const newAddress = plainToClass(Address, {
                 line1: addressDetails.line1,
@@ -25,14 +26,9 @@ export class AddressService{
                 city: addressDetails.city,
                 state: addressDetails.state,
                 pin: addressDetails.pin,
-                // experience: addressDetails.experience,
-                // username: addressDetails.username,
-                
-
-                // to encrypt password when while creating the employee
-                // password: employeeDetails.password ? await bcrypt.hash(employeeDetails.password, 10) : ' '
-                // isActive: true,
+               
             });
+            
             const save = await this.addressRepo.saveAddressDetails(newAddress);
             return save;
         } catch (err) {

@@ -6,7 +6,7 @@ import APP_CONSTANTS from "../constants";
 import { ErrorCodes } from "../util/errorCode";
 
 
-const authorize = (permittedRoles: string[]) => {
+const authorize = (permittedRoles : string[]) => {
   return async (
     req: RequestWithUser,
     res: express.Response,

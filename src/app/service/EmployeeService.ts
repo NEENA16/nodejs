@@ -9,10 +9,14 @@ import bcrypt from "bcrypt";
 import IncorrectUsernameOrPasswordException from "../exception/IncorrectUsernameOrPasswordException";
 import UserNotAuthorizedException from "../exception/UserNotAuthorizedException";
 import jsonwebtoken from "jsonwebtoken"
+import AddressRespository from "../repository/addressRepository";
+import AddressService from "./AddressSrevice";
 
 export class EmployeeService{
 
-    constructor(private employeeRepo: EmployeeRespository){
+    // constructor(private employeeRepo: EmployeeRespository, private addressService: AddressService)
+    constructor(private employeeRepo: EmployeeRespository)
+    {
 
     }
     //get all employee
@@ -26,15 +30,14 @@ export class EmployeeService{
         try {
             const newEmployee = plainToClass(Employee, {
                 name: employeeDetails.name,
-                
-                
                 dateofjoining: employeeDetails.dateofjoining,
                 departmentId: employeeDetails.departmentId,
                 role: employeeDetails.role,
                 status: employeeDetails.status,
                 experience: employeeDetails.experience,
                 username: employeeDetails.username,
-                // const data = await this.addressService.createEmployee(request.body);
+                address:employeeDetails.address,
+                
                 // createAddress(request.body.address)
                 // request.body.address
 
@@ -45,9 +48,13 @@ export class EmployeeService{
                 // isActive: true,
 
             });
+            // console.log(employeeDetails.address)
+            // await this.addressService.createAddress(employeeDetails.address);
             const save = await this.employeeRepo.saveEmployeeDetails(newEmployee);
             return save;
-        } catch (err) {
+        } catch (err) { // @ValidateNested({ each: true })
+          // @Type(() => CreateAddressDto)
+        
             // throw new HttpException(400, "Failed to create employee", "FAILED");  //overwritten error
             throw(err);
         }
@@ -84,9 +91,7 @@ export class EmployeeService{
         // }
         );
         return updateEmployeeDetails;
-        
-
-    }
+        }
      
       //delete
       async softDeleteEmployeeById(id: string){
@@ -97,11 +102,11 @@ export class EmployeeService{
 
     //for login page
     public employeeLogin = async (
-        name: string,
+        username: string,
         password: string
       ) => {
         const employeeDetails = await this.employeeRepo.getEmployeeByName(
-          name
+          username
         );
         if (!employeeDetails) {
           throw new UserNotAuthorizedException(ErrorCodes.UNAUTHORIZED);
@@ -111,7 +116,7 @@ export class EmployeeService{
           let payload = {
             "custom:id": employeeDetails.id,    // what to print in payload    key: value
             "custom:name": employeeDetails.name,
-             "role": "admin",
+             "role": employeeDetails.role,
           };
           const token = this.generateAuthTokens(payload);
 

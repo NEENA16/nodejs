@@ -16,21 +16,25 @@ class EmployeeController extends AbstractController {
   }
 
   protected initializeRoutes() {
-    this.router.get(`${this.path}`, 
-    // authorize(['admin']),    //to authorize  , a middleware
+    this.router.get(`${this.path}`,  
+    authorize(['admin','operator']),    //to authorize  , a middleware
     this.employeeResponse);
     this.router.get(`${this.path}/:id`, 
+    authorize(['admin','operator']), 
     validationMiddleware(EmployeeParamsDto, APP_CONSTANTS.params),
     this.getEmployeeById);
     this.router.put(`${this.path}/:id`, 
+    authorize(['admin']), 
     validationMiddleware(UpdateEmployeeDto, APP_CONSTANTS.body),
     validationMiddleware(EmployeeParamsDto, APP_CONSTANTS.params),
     this.updateEmployeeById);
     this.router.delete(`${this.path}/:id`, 
+    authorize(['admin']), 
     validationMiddleware(EmployeeParamsDto, APP_CONSTANTS.params),
     this.softDeleteEmployeeById);
     this.router.post(
       `${this.path}`,
+      authorize(['admin']), 
       validationMiddleware(CreateEmployeeDto, APP_CONSTANTS.body),
       // this.asyncRouteHandler(this.createEmployee),
       this.createEmployee
@@ -133,7 +137,7 @@ class EmployeeController extends AbstractController {
     try{
       const loginData = request.body;
       const loginDetail = await this.employeeService.employeeLogin(
-        loginData.name.toLowerCase(),
+        loginData.username.toLowerCase(),
         loginData.password
       );
       response.send(
