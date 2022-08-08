@@ -17,29 +17,34 @@ class DepartmentController extends AbstractController {
 
   protected initializeRoutes() {
     this.router.get(`${this.path}`, 
-    authorize(['admin','hr']),
+    // authorize(['admin','hr']),
     this.departmentResponse);
+
     this.router.get(`${this.path}/:id`, 
-    authorize(['admin','hr']),
+    // authorize(['admin','hr']),
     validationMiddleware(DepartmentParamsDto, APP_CONSTANTS.params),
     this.getDepartmentById);
+
     this.router.put(`${this.path}/:id`, 
-    authorize(['admin','hr']),
+    // authorize(['admin','hr']),
     validationMiddleware(DepartmentParamsDto, APP_CONSTANTS.params),
     validationMiddleware(UpdateDepartmentDto, APP_CONSTANTS.body),
       this.updateDepartmentById);
+
     this.router.delete(`${this.path}/:id`, 
-    authorize(['admin','hr']),
+    // authorize(['admin','hr']),
     validationMiddleware(DepartmentParamsDto, APP_CONSTANTS.params),
     this.softDeleteDepartmentById);
+    
     this.router.post(
       `${this.path}`,
-      authorize(['admin','hr']),
+      // authorize(['admin','hr']),
       validationMiddleware(CreateDepartmentDto, APP_CONSTANTS.body),
-      // this.asyncRouteHandler(this.createDepartment)
+      this.asyncRouteHandler(this.createDepartment),
       this.createDepartment
     );
   }
+
   //get all department
   private departmentResponse = async (request: RequestWithUser, response: Response, next: NextFunction) => {
     try {
@@ -70,6 +75,7 @@ class DepartmentController extends AbstractController {
     }
   };
   
+
   //create Department
   private createDepartment = async (
     request: RequestWithUser,
@@ -85,6 +91,7 @@ class DepartmentController extends AbstractController {
       next(err);
     }
   }
+
 
   //update department
   private updateDepartmentById = async (
@@ -106,6 +113,7 @@ class DepartmentController extends AbstractController {
     }
   };
 
+  
    //delete department
    private softDeleteDepartmentById = async (
     request: RequestWithUser,

@@ -15,7 +15,6 @@ import { Address } from "../entities/Address";
 
 export class EmployeeService{
 
-    // constructor(private employeeRepo: EmployeeRespository, private addressService: AddressService)
     constructor(private employeeRepo: EmployeeRespository, private addressService: AddressService)
     {
 
@@ -49,7 +48,7 @@ export class EmployeeService{
                 address:employeeDetails.address,
                 
 
-                // password: employeeDetails.password
+                
 
                 // to encrypt password when while creating the employee
                 password: employeeDetails.password ? await bcrypt.hash(employeeDetails.password, 10) : ' '
@@ -57,11 +56,9 @@ export class EmployeeService{
 
             });
             const save = await this.employeeRepo.saveEmployeeDetails(newEmployee);
-            // await this.addressService.createAddress(newAddress);
+            
             return save;
-        } catch (err) { // @ValidateNested({ each: true })
-          // @Type(() => CreateAddressDto)
-        
+        } catch (err) { 
             // throw new HttpException(400, "Failed to create employee", "FAILED");  //overwritten error
             throw(err);
         }
@@ -90,6 +87,10 @@ export class EmployeeService{
         // const employeeRepo = getConnection().getRepository(Employee);
         // const updateAddressDetails = await addressRepo.update({ id: employeeDetails.addressid, deletedAt: null },employeeDetails.address)
         // const updateEmployeeDetails = await employeeRepo.save{ id: employeeId, deletedAt: null },employeeDetails 
+        
+          
+           employeeDetails={...employeeDetails,password: employeeDetails.password ? await bcrypt.hash(employeeDetails.password, 10) : ' ',}
+        
           const updateEmployeeDetails = await this.employeeRepo.updateEmployeebyId(employeeDetails)
         //     {
         //     name: employeeDetails.name ? employeeDetails.name : undefined,

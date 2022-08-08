@@ -7,7 +7,7 @@ import { Response } from "express";
 import validationMiddleware from "../middleware/validationMiddleware";
 import {CreateAddressDto} from "../dto/CreateAddressDto";
 import { UpdateAddressDto } from "../dto/UpdateAddressDto";
-// import { AddressParamsDto } from "../dto/AddressParamsDto";
+
 
 
 class AddressController extends AbstractController {
@@ -24,20 +24,22 @@ class AddressController extends AbstractController {
     
       this.router.put(`${this.path}/:id`, 
       validationMiddleware(UpdateAddressDto, APP_CONSTANTS.body),
-    //   validationMiddleware(AddressParamsDto, APP_CONSTANTS.params),
+    
       this.updateAddressById);
       this.router.delete(`${this.path}/:id`, 
-    //   validationMiddleware(UpdateEmployeeParamsDto, APP_CONSTANTS.params),
+   
       this.softDeleteAddressById);
       this.router.post(
         `${this.path}`,
         validationMiddleware(CreateAddressDto, APP_CONSTANTS.body),
-        // this.asyncRouteHandler(this.createEmployee),
+      
         this.createAddress
       );
      
     }
-    //get all employess
+
+    //get all address
+
     private addressResponse = async (request: RequestWithUser, response: Response, next: NextFunction) => {
       try {
         const data: any = await this.addressService.getAllAddress();
@@ -48,7 +50,8 @@ class AddressController extends AbstractController {
       }
     }
   
-    //create employee
+    //create address
+
     private createAddress = async (
       request: RequestWithUser,
       response: Response,
@@ -65,6 +68,7 @@ class AddressController extends AbstractController {
     }
   
     //get element by id
+
     private getAddressById = async (
       request: RequestWithUser,
       response: Response,
@@ -82,7 +86,9 @@ class AddressController extends AbstractController {
         return next();
       }
     };
+
      // update
+
      private updateAddressById = async (
       request: RequestWithUser,
       response: Response,
@@ -101,7 +107,9 @@ class AddressController extends AbstractController {
         return next();
       }
     };
+
     //delete
+    
     private softDeleteAddressById = async (
       request: RequestWithUser,
       response: Response,
