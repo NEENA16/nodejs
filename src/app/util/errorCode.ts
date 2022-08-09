@@ -8,6 +8,10 @@ export const ErrorCodes: { [key: string]: CustomError } = {
         CODE: "UNAUTHORIZED",
         MESSAGE: "User is not allowed to perform this operation",
     },
+    ROLEUNAUTHORIZED: {
+        CODE: "ROLENOTAUTHORIZED",
+        MESSAGE: "Role is not authorised to perform this operation",
+    },
     USER_NOT_FOUND: {
         CODE: "USER_NOT_FOUND",
         MESSAGE: "User not found",

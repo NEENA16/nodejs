@@ -16,29 +16,29 @@ class DepartmentController extends AbstractController {
   }
 
   protected initializeRoutes() {
-    this.router.get(`${this.path}`, 
-    // authorize(['admin','hr']),
+    this.router.get(`${this.path}`,       //getalldepartment
+    authorize(['Admin','HR']),
     this.departmentResponse);
 
-    this.router.get(`${this.path}/:id`, 
-    // authorize(['admin','hr']),
+    this.router.get(`${this.path}/:id`,     //getdepartmentbyid
+    authorize(['Admin','HR']),
     validationMiddleware(DepartmentParamsDto, APP_CONSTANTS.params),
     this.getDepartmentById);
 
-    this.router.put(`${this.path}/:id`, 
-    // authorize(['admin','hr']),
+    this.router.put(`${this.path}/:id`,     //updatedepartment
+    authorize(['Admin']),
     validationMiddleware(DepartmentParamsDto, APP_CONSTANTS.params),
     validationMiddleware(UpdateDepartmentDto, APP_CONSTANTS.body),
       this.updateDepartmentById);
 
-    this.router.delete(`${this.path}/:id`, 
-    // authorize(['admin','hr']),
+    this.router.delete(`${this.path}/:id`,    //deletedepartment
+    authorize(['Admin']),
     validationMiddleware(DepartmentParamsDto, APP_CONSTANTS.params),
     this.softDeleteDepartmentById);
     
-    this.router.post(
+    this.router.post(                         //createdepartment
       `${this.path}`,
-      // authorize(['admin','hr']),
+      authorize(['Admin']),
       validationMiddleware(CreateDepartmentDto, APP_CONSTANTS.body),
       this.asyncRouteHandler(this.createDepartment),
       this.createDepartment
@@ -56,7 +56,7 @@ class DepartmentController extends AbstractController {
     }
   }
 
-  //get element by id
+  //get department by id
   private getDepartmentById = async (
     request: RequestWithUser,
     response: Response,

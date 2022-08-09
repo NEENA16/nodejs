@@ -1,4 +1,4 @@
-import { IsNumber, IsString, IsUUID } from "class-validator";
+import {  IsString } from "class-validator";
 
 export class UpdateDepartmentDto {
     @IsString()

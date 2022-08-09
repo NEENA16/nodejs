@@ -16,37 +16,41 @@ class EmployeeController extends AbstractController {
   }
 
   protected initializeRoutes() {
-    this.router.get(`${this.path}`,  
-    // authorize(['admin','hr']),    //to authorize  , a middleware
+    this.router.get(`${this.path}`,   //getallemployee
+    authorize(['Admin']),    //to authorize  , a middleware
     this.employeeResponse);
-    this.router.get(`${this.path}/:id`, 
-    // authorize(['admin','hr']), 
+
+    this.router.get(`${this.path}/:id`,       //getemployeebyid
+    authorize(['Admin','hr']), 
     validationMiddleware(EmployeeParamsDto, APP_CONSTANTS.params),
     this.getEmployeeById);
 
-    this.router.put(`${this.path}/:id`, 
-    // authorize(['admin']), 
+    this.router.put(`${this.path}/:id`,       //updateemployee
+    authorize(['Admin']), 
     validationMiddleware(UpdateEmployeeDto, APP_CONSTANTS.body),
     validationMiddleware(EmployeeParamsDto, APP_CONSTANTS.params),
     this.updateEmployeeById);
 
-    this.router.delete(`${this.path}/:id`, 
-    // authorize(['admin']), 
+    this.router.delete(`${this.path}/:id`,    //deleteemployee
+    authorize(['Admin']), 
     validationMiddleware(EmployeeParamsDto, APP_CONSTANTS.params),
     this.softDeleteEmployeeById);
+
     this.router.post(
-      `${this.path}`,
-      // authorize(['admin']), 
+      `${this.path}`,                         //createemployee
+      authorize(['Admin']), 
       validationMiddleware(CreateEmployeeDto, APP_CONSTANTS.body),
       // this.asyncRouteHandler(this.createEmployee),
       this.createEmployee
     );
+
     // for login page
     this.router.post(
       `${this.path}/login`,
       this.login
     );
   }
+
   //get all employess
   private employeeResponse = async (request: RequestWithUser, response: Response, next: NextFunction) => {
     try {
@@ -57,6 +61,7 @@ class EmployeeController extends AbstractController {
       return next(error);
     }
   }
+
 
   //create employee
   private createEmployee = async (
@@ -73,6 +78,7 @@ class EmployeeController extends AbstractController {
       next(err);
     }
   }
+
 
   //get element by id
   private getEmployeeById = async (
@@ -92,6 +98,8 @@ class EmployeeController extends AbstractController {
       return next(error);
     }
   };
+
+
    // update
    private updateEmployeeById = async (
     request: RequestWithUser,
@@ -108,9 +116,13 @@ class EmployeeController extends AbstractController {
         this.fmt.formatResponse(data, Date.now() - request.startTime, "OK", 1)
       );
     } catch (error) {
+      console.log(error);
+      
       return next(error);
     }
   };
+
+
   //delete
   private softDeleteEmployeeById = async (
     request: RequestWithUser,
@@ -130,6 +142,8 @@ class EmployeeController extends AbstractController {
     }
   };
  
+
+  
   //for login page
   private login = async (
     request: RequestWithUser,

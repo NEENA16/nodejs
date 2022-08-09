@@ -2,14 +2,12 @@ import { plainToClass } from "class-transformer";
 import { getConnection } from "typeorm";
 import { Employee } from "../entities/Employee";
 import EntityNotFoundException from "../exception/EntityNotFoundException";
-import HttpException from "../exception/HttpException";
 import { EmployeeRespository } from "../repository/employeeRepository";
 import { ErrorCodes } from "../util/errorCode";
 import bcrypt from "bcrypt";
 import IncorrectUsernameOrPasswordException from "../exception/IncorrectUsernameOrPasswordException";
 import UserNotAuthorizedException from "../exception/UserNotAuthorizedException";
 import jsonwebtoken from "jsonwebtoken"
-import AddressRespository from "../repository/addressRepository";
 import AddressService from "./AddressSrevice";
 import { Address } from "../entities/Address";
 
@@ -19,6 +17,7 @@ export class EmployeeService{
     {
 
     }
+
     //get all employee
     async getAllEmployees(){
         
@@ -64,10 +63,7 @@ export class EmployeeService{
         }
     }
 
-    // //get element by id
-    // async getEmployeeById(id: string) {
-    //     return await this.employeeRepo.getEmployeeById(id);
-    //   }
+ 
 
 
         // //error handle in get element by id
@@ -84,24 +80,12 @@ export class EmployeeService{
       public async updateEmployeeDetails(employeeId: string, employeeDetails: any) {
 
         employeeDetails.id = employeeId;
-        // const employeeRepo = getConnection().getRepository(Employee);
-        // const updateAddressDetails = await addressRepo.update({ id: employeeDetails.addressid, deletedAt: null },employeeDetails.address)
-        // const updateEmployeeDetails = await employeeRepo.save{ id: employeeId, deletedAt: null },employeeDetails 
-        
+       
           
            employeeDetails={...employeeDetails,password: employeeDetails.password ? await bcrypt.hash(employeeDetails.password, 10) : ' ',}
         
           const updateEmployeeDetails = await this.employeeRepo.updateEmployeebyId(employeeDetails)
-        //     {
-        //     name: employeeDetails.name ? employeeDetails.name : undefined,
-        //     dateofjoining: employeeDetails.dateofjoining ? employeeDetails.dateofjoining : undefined,
-        //     role: employeeDetails.role ? employeeDetails.role : undefined,
-        //     status: employeeDetails.status ? employeeDetails.status : undefined,
-        //     experience: employeeDetails.experience ? employeeDetails.experience : undefined,
-        //     username: employeeDetails.username ? employeeDetails.username : undefined,
-        //     password: employeeDetails.password ? employeeDetails.password : undefined
-        // }
-        // );
+    
         return updateEmployeeDetails;
         }
      

@@ -17,18 +17,18 @@ class AddressController extends AbstractController {
     }
   
     protected initializeRoutes() {
-      this.router.get(`${this.path}`, 
+      this.router.get(`${this.path}`,         //getallAddress
       this.addressResponse);
-      this.router.get(`${this.path}/:id`, 
+
+      this.router.get(`${this.path}/:id`,     //getAddressByID
        this.getAddressById);
     
       this.router.put(`${this.path}/:id`, 
-      validationMiddleware(UpdateAddressDto, APP_CONSTANTS.body),
-    
+      validationMiddleware(UpdateAddressDto, APP_CONSTANTS.body),  //updateAddress
       this.updateAddressById);
       this.router.delete(`${this.path}/:id`, 
    
-      this.softDeleteAddressById);
+      this.softDeleteAddressById);            //deleteAddress
       this.router.post(
         `${this.path}`,
         validationMiddleware(CreateAddressDto, APP_CONSTANTS.body),
@@ -67,7 +67,7 @@ class AddressController extends AbstractController {
       }
     }
   
-    //get element by id
+    //get address by id
 
     private getAddressById = async (
       request: RequestWithUser,
@@ -86,6 +86,7 @@ class AddressController extends AbstractController {
         return next();
       }
     };
+    
 
      // update
 

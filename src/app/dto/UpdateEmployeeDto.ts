@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsNumber, IsOptional, IsString, IsUUID, ValidateNested } from "class-validator";
+import { IsNumber, IsOptional, IsString, ValidateNested } from "class-validator";
 import { UpdateAddressDto } from "./UpdateAddressDto";
 
 export class UpdateEmployeeDto {

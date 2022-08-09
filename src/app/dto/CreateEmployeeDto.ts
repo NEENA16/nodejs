@@ -1,6 +1,5 @@
 import { Type } from "class-transformer";
 import { IsNumber, IsString, ValidateNested } from "class-validator";
-import { Address } from "../entities/Address";
 import { CreateAddressDto } from "./CreateAddressDto";
 
 export class CreateEmployeeDto {

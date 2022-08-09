@@ -3,7 +3,6 @@ import { validate, ValidationError } from "class-validator";
 import { Request } from "express";
 import * as express from "express";
 import HttpException from "../exception/HttpException";
-import APP_CONSTANTS from "../constants";
 import { ErrorCodes } from "../util/errorCode";
 
 

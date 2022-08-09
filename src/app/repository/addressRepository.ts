@@ -7,26 +7,31 @@ export class AddressRespository{
          const addressRepo = getConnection().getRepository(Address);
         return addressRepo.find();
     }
+
     //create employee
     public async saveAddressDetails(addressDetails: Address) {
         const addressRepo = getConnection().getRepository(Address);
         return addressRepo.save(addressDetails);
     }
+    
     //get element by id
     async getAddressById(id: string): Promise<Address> {
         const addressRepo = getConnection().getRepository(Address);
         return addressRepo.findOne(id);
       }
-     //update
+    
+      //update
     
     public async updateAddressbyId(id:string,addressDetails: Address) {
         const addressRepo = getConnection().getRepository(Address);
         return addressRepo.update(id,addressDetails);
     }
-      //delete
+    
+    //delete
       public async softDeleteAddressById(id: string) {
         const addressRepo = getConnection().getRepository(Address);
         return addressRepo.softDelete(id);
     }
 }
+
 export default AddressRespository;

@@ -43,29 +43,13 @@ export class AddressService{
       }
 
 
-        // //error handle in get element by id
-        // public async getAddressById(id: string) {
-        //     const address = await this.addressRepo.getAddressById(id);
-        //     if(!address){
-        //         throw new EntityNotFoundException(ErrorCodes.EMPLOYEE_WITH_ID_NOT_FOUND)
-        //     }
-        //     return employee;
-        // }
     
       //update
 
       public async updateAddressDetails(addressid: string, addressDetails: any) {
         const addressRepo = getConnection().getRepository(Address);
         const updateAddressDetails = await addressRepo.update(addressid,addressDetails 
-        //     {
-        //     name: employeeDetails.name ? employeeDetails.name : undefined,
-        //     dateofjoining: employeeDetails.dateofjoining ? employeeDetails.dateofjoining : undefined,
-        //     role: employeeDetails.role ? employeeDetails.role : undefined,
-        //     status: employeeDetails.status ? employeeDetails.status : undefined,
-        //     experience: employeeDetails.experience ? employeeDetails.experience : undefined,
-        //     username: employeeDetails.username ? employeeDetails.username : undefined,
-        //     password: employeeDetails.password ? employeeDetails.password : undefined
-        // }
+        
         );
         return updateAddressDetails;
         

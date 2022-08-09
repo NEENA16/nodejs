@@ -1,33 +1,38 @@
 import express from "express";
 import UserNotAuthorizedException from "../exception/UserNotAuthorizedException";
+import RoleNotAuthorizedException from "../exception/UserNotAuthorizedException";
 import RequestWithUser from "../util/rest/request";
 import jsonwebtoken from "jsonwebtoken";
 import APP_CONSTANTS from "../constants";
 import { ErrorCodes } from "../util/errorCode";
 
-
-const authorize = (permittedRoles : string[]) => {
+const authorize = (permittedRoles: string[]) => {
   return async (
     req: RequestWithUser,
     res: express.Response,
     next: express.NextFunction
   ) => {
+    const token = getTokenFromRequestHeader(req);
     try {
-      const token = getTokenFromRequestHeader(req);
       jsonwebtoken.verify(token, process.env.JWT_TOKEN_SECRET);
-      const data = jsonwebtoken.decode(token);
-      
-
-      const decodedData = JSON.parse(JSON.stringify(data));
-
-      if (!(permittedRoles.includes(decodedData.role))) {
-        throw new UserNotAuthorizedException(ErrorCodes.UNAUTHORIZED);
-      }
-    //   const det = JSON.parse(JSON.stringify(data));
-      return next();
     } catch (error) {
+      console.log(error);
       return next(new UserNotAuthorizedException(ErrorCodes.UNAUTHORIZED));
     }
+
+    const data = jsonwebtoken.decode(token);
+
+    try {
+      const decodedData = JSON.parse(JSON.stringify(data));
+      if (!permittedRoles.includes(decodedData.role)) {
+        throw new RoleNotAuthorizedException(ErrorCodes.ROLEUNAUTHORIZED);
+      }
+    } catch {
+      return next(new RoleNotAuthorizedException(ErrorCodes.ROLEUNAUTHORIZED));
+    }
+
+    //   const det = JSON.parse(JSON.stringify(data));
+    return next();
   };
 };
 
